@@ -64,7 +64,7 @@ elif configing == "YY":
     settings["twoWordsJoined"] = True
     connection()
 
-elif configing == "N":
+else:
     print("Exiting...")
-    sys.exit();
-
+    time.sleep(3)
+    sys.exit()
