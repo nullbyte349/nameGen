@@ -22,7 +22,7 @@ def connection():
         print(temp)
     elif settings['twoWordsJoined'] == True:
         clientConnection = requests.get("https://random-word-api.herokuapp.com/word")
-        time.sleep(1.5) # i'm scared of being rate limited
+        time.sleep(0.5) # i'm scared of being rate limited
         clientConnection2 = requests.get("https://random-word-api.herokuapp.com/word")
         word1 = clientConnection.content
         word2 = clientConnection2.content
@@ -49,11 +49,11 @@ settings = {
 }
 
 print("Current settings and their current values:", settings)
-print("\tnfo:\n----------------------------------------------------------------------------------------------------------------------")
-print("Y to enable singleWord mode")
-print("YY to enable twoWordsJoined mode")
+print("\ninfo:\n-----------------------------------------------------------------------------------")
+print("Y to enable  |  singleWord    | mode")
+print("YY to enable | twoWordsJoined | mode\n-----------------------------------------------------------------------------------")
 
-print("Configuring: ")
+print("\nConfiguring: ")
 configing = input("Enable? (Y/YY): ");
 
 if configing == "Y":
