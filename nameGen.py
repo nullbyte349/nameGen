@@ -1,11 +1,7 @@
-# HOLY SHIT I CAN MAKE THIS EXTENSIVE AS FUCK
-
-# TO DO:
-# add letter prefrences like capitlizing, lowercase etc
-
 import requests
 import sys
 import time
+from random import randint
 
 def string_replacement(word, word2 = None):
     if settings['singleWord'] == True:
@@ -14,8 +10,10 @@ def string_replacement(word, word2 = None):
         temp = str(temp).replace('[', '')
         temp = str(temp).replace('"', '')
         temp = str(temp).replace(']', '')
-
-        return temp
+        if settings['NumbersGen'] == True:
+            return str(temp) + str(randint(0, 1000))
+        elif settings['NumbersGen'] == False:
+            return temp
 
     elif settings['twoWordsJoined'] == True:
 
@@ -46,31 +44,40 @@ def connection():
         clientConnection2 = requests.get("https://random-word-api.herokuapp.com/word")
         word = clientConnection.content
         word2 = clientConnection2.content
-
-        print(string_replacement(word, word2))
+        if settings['NumbersGen'] == True:
+            word2 = str(word2) + str(randint(0, 1000))
+            print(string_replacement(word, word2))
+        else:
+            print(string_replacement(word, word2))
 
 settings = {
     'singleWord': False,
-    'twoWordsJoined': False
+    'twoWordsJoined': False,
+    'NumbersGen': False
 }
 
 print("Current settings and their current values:", settings)
-print("\ninfo:\n-----------------------------------------------------------------------------------")
-print("Y to enable  |  singleWord    | mode")
-print("YY to enable | twoWordsJoined | mode\n-----------------------------------------------------------------------------------")
 
 print("\nConfiguring: ")
-configing = input("Enable? (Y/YY): ");
+configing, configing2, configing3 = input("Enable? (singleWord: Y/N | twoWordsJoined: Y/N | NumbersGen: Y/N: ").split()
 
 if configing == "Y":
-    settings["singleWord"] = True;
-    connection()
+    settings["singleWord"] = True
+    if configing3 == "Y":
+        settings['NumbersGen'] = True
+        connection()
+    else:
+        connection()
 
-elif configing == "YY":
+if configing2 == "Y":
     settings["twoWordsJoined"] = True
-    connection()
+    if configing3 == "Y":
+        settings['NumbersGen'] = True
+        connection()
+    else:
+        connection()
 
-else:
+elif configing == "N" and configing2 == "N" and configing3 == "N":
     print("Exiting...")
     time.sleep(3)
     sys.exit()
