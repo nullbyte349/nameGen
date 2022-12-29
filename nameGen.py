@@ -1,7 +1,6 @@
 # HOLY SHIT I CAN MAKE THIS EXTENSIVE AS FUCK
 
 # TO DO:
-# make a function for string replacement
 # add letter prefrences like capitlizing, lowercase etc
 
 import requests
