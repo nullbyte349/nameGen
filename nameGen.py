@@ -8,10 +8,17 @@ import requests
 import sys
 import time
 
-def connection():
+def string_replacement(word, word2 = None):
     if settings['singleWord'] == True:
-        clientConnection = requests.get("https://random-word-api.herokuapp.com/word")
-        word = clientConnection.content
+        temp = str(word).replace('b', '')
+        temp = str(temp).replace("'", '')
+        temp = str(temp).replace('[', '')
+        temp = str(temp).replace('"', '')
+        temp = str(temp).replace(']', '')
+
+        return temp
+
+    elif settings['twoWordsJoined'] == True:
 
         temp = str(word).replace('b', '')
         temp = str(temp).replace("'", '')
@@ -19,29 +26,29 @@ def connection():
         temp = str(temp).replace('"', '')
         temp = str(temp).replace(']', '')
 
-        print(temp)
-    elif settings['twoWordsJoined'] == True:
-        clientConnection = requests.get("https://random-word-api.herokuapp.com/word")
-        time.sleep(0.5) # i'm scared of being rate limited
-        clientConnection2 = requests.get("https://random-word-api.herokuapp.com/word")
-        word1 = clientConnection.content
-        word2 = clientConnection2.content
-
-        temp1 = str(word1).replace('b', '')
-        temp1 = str(temp1).replace("'", '')
-        temp1 = str(temp1).replace('[', '')
-        temp1 = str(temp1).replace('"', '')
-        temp1 = str(temp1).replace(']', '')
-
         temp2 = str(word2).replace('b', '')
         temp2 = str(temp2).replace("'", '')
         temp2 = str(temp2).replace('[', '')
         temp2 = str(temp2).replace('"', '')
         temp2 = str(temp2).replace(']', '')
 
-        # personal prefrence for now omegalul   
-        test = temp1 + temp2.capitalize()
-        print(test)
+        return temp + temp2.capitalize()
+
+def connection():
+    if settings['singleWord'] == True:
+        clientConnection = requests.get("https://random-word-api.herokuapp.com/word")
+        word = clientConnection.content
+
+        print(string_replacement(word))
+
+    elif settings['twoWordsJoined'] == True:
+        clientConnection = requests.get("https://random-word-api.herokuapp.com/word")
+        time.sleep(0.5) # i'm scared of being rate limited
+        clientConnection2 = requests.get("https://random-word-api.herokuapp.com/word")
+        word = clientConnection.content
+        word2 = clientConnection2.content
+
+        print(string_replacement(word, word2))
 
 settings = {
     'singleWord': False,
